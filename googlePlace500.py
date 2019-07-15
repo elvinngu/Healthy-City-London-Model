@@ -23,7 +23,7 @@ class coordinates_box(object):
         self.coordset2 = []
         
         
-    def createcoordinates(self, centre_lat, centre_lon, width_m, radius_m):
+    def createcoordinates(self, centre_lat, centre_lon, width_m, radius_m,j):
         # Based on the input radius this tesselates a 2D space with circles in
         # a hexagonal structure:
         centre_x,centre_y,self.zone_number,self.zone_letter = utm.from_latlon(centre_lat,centre_lon)
@@ -59,7 +59,7 @@ class coordinates_box(object):
             coords[0],coords[1] = utm.to_latlon(coords[0],coords[1],self.zone_number,self.zone_letter)
         
         
-        print('circles: Coordinates-set contains %d coordinates' % len(self.coordset))
+        print('InnerSquare %d: parsing with %d circles' % (j,len(self.coordset)))
         
     def createcoordinates2(self, centre_lat, centre_lon, width,squarewidths):
         # Based on the input width, this tesselates a 2D space dividing the space to squares
@@ -93,14 +93,14 @@ class coordinates_box(object):
         for coords in self.coordset2:
             coords[0],coords[1] = utm.to_latlon(coords[0],coords[1],self.zone_number2,self.zone_letter2)
             
-        print('squares: Coordinates-set contains %d coordinates' % len(self.coordset2))
+        print('Searching area of %d km2:\nMain square is divided into %d inner squares to be searched.\n' %(width,len(self.coordset2)))
         
         
 
         
         
 def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths):
-    
+    start = time.time()
     fullresults2 = []
     
     if width > squarewidths:
@@ -108,33 +108,38 @@ def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths):
         set2 = coordinates_box()
         set2.createcoordinates2(centre_lat, centre_lon, width,squarewidths)
         
-
+        j = 0
         for coords in set2.coordset2:
-            fullresults = parsePlaces2(coords[0],coords[1],squarewidths,type_)
+            j += 1
+            fullresults = parsePlaces2(coords[0],coords[1],squarewidths,type_,j)
             fullresults2.extend(fullresults)
             
         
     else: 
-        fullresults2 = parsePlaces2(centre_lat,centre_lon,width,type_)
+        j = 1
+        fullresults2 = parsePlaces2(centre_lat,centre_lon,width,type_,j)
         
     with open(os.path.join(DATA_DIR, type_+str(centre_lat)+str(width)+".csv"),"w",newline="",encoding="utf-8") as df:
-        fullresults2 = pd.DataFrame(fullresults2,columns = ['Latitude','Longtitude','Name','Rating','Price Level','Address'])
+        fullresults2 = pd.DataFrame(fullresults2,columns = ['Latitude','Longtitude','Name','Rating','Total User Ratings','Price Level','Address'])
         fullresults2.to_csv(df)
+    
+    end = time.time()
+    print('\nTime taken = %d seconds' %(end-start))
         
     
         
     
 
-def parsePlaces2(lat, long, width, type_):
+def parsePlaces2(lat, long, width, type_,j):
         
-        radius = width/4
+        radius = width/2
         i = 0
         fullresults=[]
         while True:
             
             # initialise coordinates of points to be parsed
             set1 = coordinates_box()
-            set1.createcoordinates(lat,long,width,radius)
+            set1.createcoordinates(lat,long,width,radius,j)
 
             
             # run search for all coordinates 
@@ -146,7 +151,7 @@ def parsePlaces2(lat, long, width, type_):
                 i += 1
                 k = len(places)
                 if k == 60:
-                    print('\n\n\nResults at i = %d in coordset is 60, restarting loop\n\n\n\n' %i)
+                    print('Repeat Innersquare %d: results at circle no. %d > 60, try with more circles' %(j,i))
                     radius = radius/1.5
                     i = 0
                     fullresults=[]
@@ -202,6 +207,10 @@ class GooglePlaces(object):
             except:
               result.append('no rating')
             try:
+              result.append(i['user_ratings_total'])
+            except:
+              result.append('no total user ratings')
+            try:
               result.append(i['price_level'])
             except:
               result.append('no price level')
@@ -219,14 +228,11 @@ class GooglePlaces(object):
 
 if __name__=="__main__":
     apiKey = 'AIzaSyBsEcSDpfh5mcprCLTUk7eOPW3VoumhBpA'
-    centre_lat = 51.495227
-    centre_long = -0.138546
-    width = 3000
-    squarewidths = 1000 #the maximum width of one square
+    centre_lat = 51.596110
+    centre_long = 0.204146
+    width = 4000
+    squarewidths = 2000 #the maximum width of one square
     type_ = 'restaurant'
-    start = time.time()
     parsePlaces3(centre_lat,centre_long,width,type_,squarewidths)
-    end = time.time()
-    print(end-start)
     
     
