@@ -17,15 +17,22 @@ apiKey = "xxxxxxxxxxxxxxxxxxxxxxxx"
 centre_lat = 51.495227 # centre of square
 centre_long = -0.138546 
 width = 3000 # width of square
-squarewidths = 1000 #the maximum width of one square
-type_ = 'restaurant'
+
+innerwidth = 1000 #the maximum width of one inner square (read 'How it works' section for more information)
+type_ = 'restaurant' 
+
 parsePlaces3(centre_lat,centre_long,width,type_,squarewidths)
 ```
 
+## Usage Recommendations
+
+
+
 ## Limitations
 
+Every page requests (20 results) from google API is delayed by 2 seconds. Hence, to obtain many results may take a long time
 
+Due to the overlapping area of cirlces as seen in figure 1, some results may duplicate. This causes some inefficiencies within the search process but it is unavoidable. 
 
+The function do not automatically select the most suitable innerwidth to start with. The innerwidth input is chosen intuitively and the most optimal innerwidth is 
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
