@@ -18,7 +18,7 @@ centre_lat = 51.495227 # centre of square
 centre_long = -0.138546 
 width = 3000 # width of square
 
-innerwidth = 1000 #the maximum width of one inner square (read 'How it works' section for more information)
+innerwidth = 1000 #the width of one inner square (read 'How it works' section for more information)
 type_ = 'restaurant' 
 
 parsePlaces3(centre_lat,centre_long,width,type_,squarewidths)
