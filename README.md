@@ -47,7 +47,7 @@ The function do not automatically select the most suitable innerwidth to start w
 This code is **only for *London*!** This code scrapes food hygiene ratings for all business types, including hotels, retailers, restaurants and etc with respect to the borough the business is located at. London is divided into 33 boroughs(technically 32 boroughs and 1 city). Along with the FHRS, we can also obtain details with respect to the business, notably the **Business Name, Business Type, Business Type ID, Address, Geocode(Latitude,Longitude).** In the context of our tasks, we are only interested in the aforementioned attributes of the business. 
 
 ## How it works
-## 1)Collecting the Complete Set of Data
+## 1) Collecting the Complete Set of Data
 
 Unlike Google Places API, there is no limit to how many results that can be retrieved at any instance. The code will repeat the scrape for each borough and results for all businesses in all 33 boroughs should be collected.  
 
@@ -70,7 +70,7 @@ for i in b:
     a = list(list(mydict.items()))[0][1]['EstablishmentCollection']['EstablishmentDetail']
 ```
 
-## 2)Collecting Certain Attributes of the Business
+## 2) Collecting Certain Attributes of the Business
 
 Moving forward from the data scraped above, user can now collect specific attributes of the business using the following lines of codes. The example below shows how to collect the business name of the business using the try and except function. User can repeat the function as many times as necessary to collect data of different attributes of the business. 
 
@@ -122,10 +122,12 @@ A thing to note that is when getting the address of a business, user must consid
             
         add=AL1+AL2+AL3+AL4
         add=add[:-1]
+        result.append(add)    
+        results.append(result)
 ```
 After the completion of each attribute collection, the data should be appended to the list 'result'. Before the loop restarts, the result should be appended to another list, for example 'full results'. Result should return to an empty list before the start of each loop, and Full results should contain all of the data for each result in each loop.
 
-## 3)Writing the data into a CSV file
+## 3) Writing the data into a CSV file
 
 For the ease of retrieving as well as visualising the data, user can write the data of the full results into a csv file using the last few lines of the code. This is an optional step, subject to what the user needs the data to be saved in.
 
