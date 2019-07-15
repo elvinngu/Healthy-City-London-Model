@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
-
-
 import json
 import requests
 import xmltodict
@@ -12,23 +9,19 @@ import csv
 import os
 
 
-# In[6]:
-
-
 DATA_DIR=os.path.join(os.getcwd(),"Food Hygiene Ratings by Food Standard Agency ")
+
 if not os.path.isdir(DATA_DIR):
    os.makedirs(DATA_DIR)
-
-
-# In[10]:
 
 
 fhrsurl ="http://ratings.food.gov.uk/OpenDataFiles/FHRS5%xen-GB.xml"
 a=list(range(1,34))
 b = ["%02d" % n for n in a]
 results=[]
-for i in b:
 
+
+for i in b:
     url = fhrsurl.replace("%x",str(i))
     response= requests.get(url)
     response.encoding= 'utf-8'
@@ -41,10 +34,12 @@ for i in b:
     for i in list(range(0,len(a))):
         result = []
         add=[]
+         
         try:
             result.append(a[i]['BusinessName'])
         except:
             result.append("No Business Name")
+            
         try:
             result.append(a[i]['BusinessTypeID'])
         except:
@@ -64,6 +59,7 @@ for i in b:
             result.append(a[i]["Geocode"]["Latitude"])
         except:
             result.append("NaN")
+            
         try:
             result.append(a[i]["Geocode"]["Longitude"])
         except:
@@ -102,9 +98,10 @@ for i in b:
         result.append(add)    
         results.append(result)
 
-with open(os.path.join(DATA_DIR, "hygiene data "+".csv"), "w",newline="", encoding="utf-8") as fout:
+with open(os.path.join(DATA_DIR, "Hygiene Ratings Data "+".csv"), "w",newline="", encoding="utf-8") as fout:
     csv_writer = csv.writer(fout)
     csv_writer.writerow(['Business Name','Business Type ID','Business Type','FHRS Rating','Latitude','Longitude','Address'])
+   
     for r in results:
         csv_writer.writerow(r)
 
