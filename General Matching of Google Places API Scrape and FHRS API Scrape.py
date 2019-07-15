@@ -1,66 +1,28 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[20]:
-
-
 import csv
 import pandas as pd
 
-
-# In[21]:
-
-
 dfh1=pd.read_csv('Your first Google ratings results of the region.csv')
-dfh2=pd.read_csv('Your second Google ratings results of the region.csv')
-dfh3=pd.read_csv('Your third Google ratings results of the region.csv')
+#dfh2=pd.read_csv('Your second Google ratings results of the region.csv')
+#dfh3=pd.read_csv('Your third Google ratings results of the region.csv')
 dfh=pd.concat([dfh1,dfh2,dfh3],ignore_index=True)
-
-
-# In[22]:
-
 
 dfg=pd.read_csv('Your hygiene ratings results of the region.csv')
 dfg.set_index('Business Type ID',inplace=True)
 dfg=dfg.loc[['input integers that you are interested in(see read me for more information)']]
 dfg.reset_index(inplace=True)
 
-
-# In[23]:
-
-
 dfh.drop('Unnamed: 0',axis=1,inplace= True)
-
-
-# In[24]:
-
-
 dfh.drop_duplicates(inplace=True)
-
-
-# In[25]:
-
-
 dfh.reset_index(inplace=True)
-
-
-# In[26]:
-
-
 dfh.drop('index',axis=1,inplace=True)
-
-
-# In[27]:
-
 
 df1=dfh.fillna('0')
 df1=df1[df1['Address']!='0']
 df2=dfg.fillna('0')
 df2=df2[df2['Address']!='0']
-
-
-# In[28]:
-
 
 adddf1=df1['Address']
 adddf2=df2['Address']
@@ -69,10 +31,6 @@ for i in adddf1:
     addit.append(i.replace('Rd','Road'))
 adddf1=addit
 df1['Address']=adddf1
-
-
-# In[29]:
-
 
 c=[]
 d=[]
@@ -148,24 +106,10 @@ for r in adddf1:
                         HygieneRating.append(df2.loc[d[0]]['FHRS Rating'])
                         BusinessName.append(df2.loc[d[0],'Business Name'])
 
-
-# In[30]:
-
-
 dfnew=pd.DataFrame({'Latitude':latitude,'Longitude':longitude,'Address':address,'Business Name':BusinessName,'Name':name,'Google Rating':GoogleRating,'Price Level':pricelevel,'Hygiene Rating':HygieneRating})
 dfnew.drop_duplicates(inplace=True)
 dfnew.reset_index(inplace=True)
 dfnew.drop('index',axis=1,inplace=True)
-
-
-# In[31]:
-
-
-dfnew
-
-
-# In[32]:
-
 
 indexes=[]
 for i in range(0,len(dfnew)):
@@ -196,14 +140,8 @@ dfnew.drop(indexes,inplace=True)
 dfnew.reset_index(inplace=True)
 dfnew.drop('index',axis=1,inplace=True)
 
-
-# In[34]:
-
-
 dfnew.to_csv('Your_FileName.csv')
 
-
-# In[ ]:
 
 
 
