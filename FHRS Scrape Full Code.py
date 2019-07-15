@@ -7,7 +7,6 @@
 import json
 import requests
 import xmltodict
-import time as TI
 import pandas as pd
 import csv
 import os
