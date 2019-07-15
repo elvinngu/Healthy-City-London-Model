@@ -118,7 +118,7 @@ def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths):
         fullresults2 = parsePlaces2(centre_lat,centre_lon,width,type_)
         
     with open(os.path.join(DATA_DIR, type_+str(centre_lat)+str(width)+".csv"),"w",newline="",encoding="utf-8") as df:
-        fullresults2 = pd.DataFrame(fullresults2,columns = ['Eastings','Northings','Name','Rating','Price Level','Address'])
+        fullresults2 = pd.DataFrame(fullresults2,columns = ['Latitude','Longtitude','Name','Rating','Price Level','Address'])
         fullresults2.to_csv(df)
         
     
