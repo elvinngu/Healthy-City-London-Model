@@ -128,14 +128,23 @@ for i in range(0,len(dfnew)):
         c.remove('&')
     except:
         pass
-    for r in c:
-        if r in b:
+    
+    logic=[]
+    if len(c)!=1:
+        for r in c:
+            if r in b:
+                logic.append(True)
+                break
+            else:
+                logic.append(False)
+        if logic.count(True)<2:
+            indexes.append(i)
+    else:
+        if c[0] in b:
             logic=True
-            break
         else:
-            logic=False
-    if logic==False:
-        indexes.append(i)
+            indexes.append(i)
+            
 dfnew.drop(indexes,inplace=True)
 dfnew.reset_index(inplace=True)
 dfnew.drop('index',axis=1,inplace=True)
