@@ -40,11 +40,11 @@ class coordinates_box(object):
         y = y_start
         
         while True:
-            if (x <= northwest_x) & (y <= northwest_y):
+            if (x <= northwest_x + radius_m) & (y <= northwest_y + radius_m):
                 self.coordset.append([x,y])
-            if y > northwest_y:
+            if y > northwest_y + radius_m:
                 break
-            elif x > northwest_x:
+            elif x > northwest_x + radius_m:
                 y_level += 1
                 y += radius_m + radius_m *math.sin(math.radians(30))
                 if y_level % 2 != 0:
