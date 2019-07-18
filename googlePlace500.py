@@ -33,8 +33,8 @@ class coordinates_box(object):
         northwest_x = centre_x + width_m/2
         northwest_y = centre_y + width_m/2
     
-        x_start = southeast_x + radius_m*math.cos(math.radians(30)) 
-        y_start = southeast_y + radius_m*math.cos(math.radians(30))
+        x_start = southeast_x + radius_m*math.cos(math.radians(30)) - radius_m*0.5
+        y_start = southeast_y + radius_m*math.cos(math.radians(30)) - radius_m*0.5
         
         y_level = 1
         x = x_start
@@ -138,7 +138,7 @@ def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths):
 
 def parsePlaces2(lat, long, width, type_,j):
         
-        radius = width/3.3
+        radius = width/2.8
         i = 0
         fullresults=[]
         while True:
