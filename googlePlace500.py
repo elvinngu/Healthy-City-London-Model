@@ -26,14 +26,15 @@ class coordinates_box(object):
     def createcoordinates(self, centre_lat, centre_lon, width_m, radius_m,j):
         # Based on the input radius this tesselates a 2D space with circles in
         # a hexagonal structure:
+        self.radius = radius_m
         centre_x,centre_y,self.zone_number,self.zone_letter = utm.from_latlon(centre_lat,centre_lon)
         southeast_x = centre_x - width_m/2
         southeast_y = centre_y - width_m/2
         northwest_x = centre_x + width_m/2
         northwest_y = centre_y + width_m/2
-
-        x_start = southeast_x
-        y_start = southeast_y
+    
+        x_start = southeast_x + radius_m*math.cos(math.radians(30)) 
+        y_start = southeast_y + radius_m*math.cos(math.radians(30))
         
         y_level = 1
         x = x_start
@@ -50,7 +51,7 @@ class coordinates_box(object):
                 if y_level % 2 != 0:
                     x = x_start
                 else:
-                    x = x_start + radius_m*math.cos(math.radians(30))
+                    x = x_start - radius_m*math.cos(math.radians(30))
             else:
                 x += 2 * radius_m*math.cos(math.radians(30))
         
@@ -121,7 +122,12 @@ def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths):
         
     with open(os.path.join(DATA_DIR, type_+str(centre_lat)+str(width)+".csv"),"w",newline="",encoding="utf-8") as df:
         fullresults2 = pd.DataFrame(fullresults2,columns = ['Latitude','Longtitude','Name','Rating','Total User Ratings','Price Level','Address'])
+        df.drop_duplicates(inplace=True)
+        fullresults2.reset_index(inplace=True)
+        fullresults2.drop('index',axis=1,inplace=True)
         fullresults2.to_csv(df)
+
+        
     
     end = time.time()
     print('\nTime taken = %d seconds' %(end-start))
@@ -132,7 +138,7 @@ def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths):
 
 def parsePlaces2(lat, long, width, type_,j):
         
-        radius = width/2
+        radius = width/3.3
         i = 0
         fullresults=[]
         while True:
@@ -227,12 +233,13 @@ class GooglePlaces(object):
 
 
 if __name__=="__main__":
-    apiKey = 'AIzaSyBsEcSDpfh5mcprCLTUk7eOPW3VoumhBpA'
+    apiKey = 'AIzaSyA1RXqm3NDnfq33SRgp9uU4ZzeIKQYhYuY'
     centre_lat = 51.596110
     centre_long = 0.204146
-    width = 4000
-    squarewidths = 2000 #the maximum width of one square
+    width = 1000
+    squarewidths = 1000 #the maximum width of one square
     type_ = 'restaurant'
     parsePlaces3(centre_lat,centre_long,width,type_,squarewidths)
     
     
+
