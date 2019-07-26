@@ -1,12 +1,17 @@
 # googlePlaces
 
-parsePlaces is a function for obtaining places of interest from the google placesx API. This function overcomes the limits of google API where only a maximum of 60 results is returned when using google places API.
+googlePlaces is a function for obtaining places of interest from the google places API. Google Places API limits the search results to 60 in a given area. This function overcomes that limit.
 
 ### How it works
 
-[Google places API](https://developers.google.com/places/web-service/intro) allows the retrieval of 60 results from a circle of %x radius with centre (x-coordinate,y-coordinate). 
+[Google places API](https://developers.google.com/places/web-service/intro) allows the retrieval of 60 results from a circle of any radius with centre (x-coordinate,y-coordinate). 
 
-This function loops google places API as many time as it needs to get unlimited results within a square area. 
+This function loops google places API as many time as it needs to get unlimited results within a square area. The following picture illustrates the searched square area with multiple cirlces (each circle represent each parsing of the google API in that area).
+
+<img src = "pictures/Screenshot%202019-07-17%20at%2017.07.45.png" width = "600" align ="middle">
+
+If the number of results in a particular circle, the function will automatically 
+
 
 ### Usage
 
