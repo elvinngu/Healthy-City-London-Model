@@ -2,13 +2,13 @@
 
 parsePlaces is a function for obtaining places of interest from the google placesx API. This function overcomes the limits of google API where only a maximum of 60 results is returned when using google places API.
 
-## How it works
+### How it works
 
 [Google places API](https://developers.google.com/places/web-service/intro) allows the retrieval of 60 results from a circle of %x radius with centre (x-coordinate,y-coordinate). 
 
 This function loops google places API as many time as it needs to get unlimited results within a square area. 
 
-## Usage
+### Usage
 
 ```python
 apiKey = "xxxxxxxxxxxxxxxxxxxxxxxx"
@@ -24,7 +24,7 @@ type_ = 'restaurant'
 parsePlaces3(centre_lat,centre_long,width,type_,squarewidths)
 ```
 
-## Usage Recommendations
+### Usage Recommendations
 
 Approximated optimal innerwidths to search for restaurants:
 Chinatown - innerwidth = 300
@@ -34,7 +34,7 @@ Zone 3/residential areas - innerwidth = 2000
 Is there a limit to maximum width of search area i can input?
 No, but it is recommended that the search do not include an area so large that it includes very dense areas as well as very deserted areas. This will greatly reduce the efficiency of the function. For example, instead of searching an area of width of 30km2 that includes a very dense area (e.g. chinatown) and a less dense area (e.g. residentials) which may take hours. Split chinatown and residential areas into two areas to be searched with different innerwidths. This may increase the efficiency by a few times. 
 
-## Limitations
+### Limitations
 
 Every page requests (20 results) from google API is delayed by 2 seconds. Hence, to obtain many results may take a long time
 
@@ -46,12 +46,12 @@ The function do not automatically select the most suitable innerwidth to start w
 
 This code is **only for *London*!** This code scrapes food hygiene ratings for all business types, including hotels, retailers, restaurants and etc with respect to the borough the business is located at. London is divided into 33 boroughs(technically 32 boroughs and 1 city). Along with the FHRS, we can also obtain details with respect to the business, notably the **Business Name, Business Type, Business Type ID, Address, Geocode(Latitude,Longitude).** In the context of our tasks, we are only interested in the aforementioned attributes of the business. 
 
-## Limitations
+### Limitations
 
 The url doesn't seem to have a pattern if the user requires data from other counties. Hence, the only way to tackle this is to visit the website https://ratings.food.gov.uk/open-data/en-GB, then click on the county or borough that the user is interested in, copy the url and paste it to the code.
 
-## How it works
-## 1) Collecting the Complete Set of Data
+### How it works
+### 1) Collecting the Complete Set of Data
 
 Unlike Google Places API, there is no limit to how many results that can be retrieved at any instance. The code will repeat the scrape for each borough and results for all businesses in all 33 boroughs should be collected.  
 
@@ -74,7 +74,7 @@ for i in b:
     a = list(list(mydict.items()))[0][1]['EstablishmentCollection']['EstablishmentDetail']
 ```
 
-## 2) Collecting Certain Attributes of the Business
+### 2) Collecting Certain Attributes of the Business
 
 Moving forward from the data scraped above, user can now collect specific attributes of the business using the following lines of codes. The example below shows how to collect the business name of the business using the try and except function. User can repeat the function as many times as necessary to collect data of different attributes of the business. 
 
@@ -131,7 +131,7 @@ A thing to note that is when getting the address of a business, user must consid
 ```
 After the completion of each attribute collection, the data should be appended to the list 'result'. Before the loop restarts, the result should be appended to another list, for example 'full results'. Result should return to an empty list before the start of each loop, and Full results should contain all of the data for each result in each loop.
 
-## 3) Writing the data into a CSV file
+### 3) Writing the data into a CSV file
 
 For the ease of retrieving as well as visualising the data, user can write the data of the full results into a csv file using the last few lines of the code. This is an optional step, subject to what the user needs the data to be saved in.
 
@@ -140,7 +140,7 @@ For the ease of retrieving as well as visualising the data, user can write the d
 
 This code is to match restaurants in both datasets and create a new dataset that contains the necessary attributes of a restaurant, as well as the google ratings and hygiene ratings.
 
-## Limitations
+### Limitations
 
 User might notice that the geocode, address as well as the business name are different when comparing the data collected using FHRS API and Google Places API. This introduced a problem when matching the two datasets.
 
@@ -153,7 +153,7 @@ dfh1=pd.read_csv('Your first Google ratings results of the region.csv')
 dfh=pd.concat([dfh1,dfh2,dfh3],ignore_index=True)
 ```
 
-## Tackling the difference in Two data sets
+### Tackling the difference in Two data sets
 
 The code is designed in such a way that there are three checks to make sure the restaurant that match in both data sets are accurate. A sequential filter also allows the code to run faster as the data sets are reduced in size after each filter. The first step is to check if the restaurant has the same business address. This will filter out the majority of the restaurants that don't match. However, if the address obtained from Google Places API is generic (usually a one word address, for instance 'Barking'), you might get several results from hygiene data sets that match with the google data sets. 
 
