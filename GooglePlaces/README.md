@@ -11,11 +11,11 @@ The purpose of this script is to overcome that limit as efficiently as possible.
 (b) the width of the square area of interest
 (c) type of places interested 
 
-<img src = "GooglePlaces/pictures/IMG_BC5D48C3703A-1.jpeg" width = "600" align ="middle">
+<img src = "pictures/IMG_BC5D48C3703A-1.jpeg" width = "600" align ="middle">
 
 This function loops google places API as many time as it needs to get unlimited results within the square area shown above. The following picture illustrates the searched square area with multiple google API searches (each circle represent one parsing of the google API in that area).
 
-<img src = "GooglePlaces/pictures/Screenshot%202019-07-17%20at%2017.07.45.png" width = "600" align ="middle">
+<img src = "pictures/Screenshot%202019-07-17%20at%2017.07.45.png" width = "600" align ="middle">
 
 2. If the number of results in any particular circle exceeds 60, the function will automatically repeat parsing the area with circles of smaller radius to ensure that no result is missed. 
 
