@@ -19,6 +19,10 @@ This function loops google places API as many time as it needs to get unlimited 
 
 2. If the number of results in any particular circle exceeds 60, the function will automatically repeat parsing the area with circles of smaller radius to ensure that no result is missed. 
 
+3. [Optional - recommended when parsing an area of larger than 1km] The user can also input the innerwidth argument which will split the large square area to smaller sqaure areas. This will make the programme run more efficiently. 
+
+For example, if the user runs a search for a sqaure of area 100km2, the programme will end up using very small circles for the whole area. This is due to the high probability of a very dense area in some part of the 100km2 area. If the user splits up the 100km2 area into smaller squares to be searched, different radius of circles will be used which will allow a more efficient search of the 100km2 area even when the desnity of places in the area is heterogenous. 
+
 
 
 ### Example Usage
@@ -31,29 +35,43 @@ centre_lat = 51.495227 # centre of square
 centre_long = -0.138546 
 width = 3000 # width of square
 
+type_ = 'restaurant' 
+
+parsePlaces3(centre_lat,centre_long,width,type_)
+```
+
+```python
+apiKey = "xxxxxxxxxxxxxxxxxxxxxxxx"
+
+# the following three inputs will determine the area of search:
+centre_lat = 51.495227 # centre of square
+centre_long = -0.138546 
+width = 3000 # width of square
+
 innerwidth = 1000 #the width of one inner square (read 'How it works' section for more information)
 type_ = 'restaurant' 
 
-parsePlaces3(centre_lat,centre_long,width,type_,squarewidths)
+parsePlaces3(centre_lat,centre_long,width,type_,innerwidth)
 ```
 
 ### Usage Recommendations
 
 Approximated optimal innerwidths to search for restaurants:
-Chinatown - innerwidth = 300
-Kensington - innerwidth = 600
-Zone 3/residential areas - innerwidth = 2000
+Chinatown recommended innerwidth = 500
+Kensington recommended innerwidth = 600
+Zone 3/residential areas recommended innerwidth = 2000
 
 Is there a limit to maximum width of search area i can input?
 No, but it is recommended that the search do not include an area so large that it includes very dense areas as well as very deserted areas. This will greatly reduce the efficiency of the function. For example, instead of searching an area of width of 30km2 that includes a very dense area (e.g. chinatown) and a less dense area (e.g. residentials) which may take hours. Split chinatown and residential areas into two areas to be searched with different innerwidths. This may increase the efficiency by a few times. 
 
 ### Limitations
 
-Every page requests (20 results) from google API is delayed by 2 seconds. Hence, to obtain many results may take a long time
+1. Many results may take a long time. Every page requests (20 results) from google API is delayed by 2 seconds (a limit placed by googleAPI). Hence, to obtain 3000 locations of data may take up to an hour.
 
-Due to the overlapping area of cirlces as seen in figure 1, some results may duplicate. This causes some inefficiencies within the search process but it is unavoidable. 
+2. The function do not automatically select the most suitable innerwidth to start with. The innerwidth input is chosen intuitively and the most optimal innerwidth is dependent on the density of places in the specified location. For example, in chinatown, an innerwidth of 300 is suitable to search for restaurants but in a residential area, an innerwidth of 2000 for restaurants is suitable. If unclear, usage value recommendations are given for restaurants in London.
 
-The function do not automatically select the most suitable innerwidth to start with. The innerwidth input is chosen intuitively and the most optimal innerwidth is dependent on the density of places in the specified location. For example, in chinatown, an innerwidth of 300 is suitable to search for restaurants but in a residential area, an innerwidth of 2000 for restaurants is suitable. If unclear, follow usage recommendations for London.
+### Help
+Contact: elvinngu@gmail.com 
 
 # Scraping Food Hygiene Ratings(FHRS) from Food Standard Agency
 
@@ -148,6 +166,9 @@ After the completion of each attribute collection, the data should be appended t
 
 For the ease of retrieving as well as visualising the data, user can write the data of the full results into a csv file using the last few lines of the code. This is an optional step, subject to what the user needs the data to be saved in.
 
+### Help 
+Contact: jia.lim17@imperial.ac.uk
+
 
 # General Matching Hygiene Ratings Data and Google Places Data
 
@@ -173,4 +194,7 @@ The code is designed in such a way that there are three checks to make sure the 
 After the first filter, the code will compute the difference in the latitude and longitude between two data sets and if the difference is more than 0.01, the data is then removed. However, if two restaurants are located in the same coordinates(this will occur if both restaurants are in a shopping mall and one is just above of the other), these two restaurants will still be matched to a single restaurant. 
 
 The final step of the filter is to check if the name is similar in both data sets. This can be done using .split() function to check if one of the element in the name matches the name in the other data set. 
+
+### Help
+Contact: jia.lim17@imperial.ac.uk
 
