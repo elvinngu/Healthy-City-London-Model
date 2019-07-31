@@ -100,7 +100,9 @@ class coordinates_box(object):
 
         
         
-def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths):
+def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths = None):
+    if squarewidths == None:
+        squarewidths = width
     start = time.time()
     fullresults2 = []
     
@@ -122,7 +124,7 @@ def parsePlaces3(centre_lat,centre_lon,width,type_,squarewidths):
         
     with open(os.path.join(DATA_DIR, type_+str(centre_lat)+str(width)+".csv"),"w",newline="",encoding="utf-8") as df:
         fullresults2 = pd.DataFrame(fullresults2,columns = ['Latitude','Longtitude','Name','Rating','Total User Ratings','Price Level','Address'])
-        df.drop_duplicates(inplace=True)
+        fullresults2.drop_duplicates(inplace=True)
         fullresults2.reset_index(inplace=True)
         fullresults2.drop('index',axis=1,inplace=True)
         fullresults2.to_csv(df)
@@ -237,7 +239,7 @@ if __name__=="__main__":
     centre_lat = 51.596110
     centre_long = 0.204146
     width = 1000
-    squarewidths = 1000 #the maximum width of one square
+    squarewidths = 500 #the maximum width of one inner square
     type_ = 'restaurant'
     parsePlaces3(centre_lat,centre_long,width,type_,squarewidths)
     
