@@ -4,7 +4,7 @@ import pandas as pd
 
 
 
-url = 'https://api.cqc.org.uk/public/v1/locations?page=1&perPage=20000&partnerCode=ImperialStudent'
+url = 'https://api.cqc.org.uk/public/v1/locations?page=1&perPage=100000&partnerCode=ImperialStudent'
 response = requests.get(url=url)
 response_locations = response.json()
 results = []
