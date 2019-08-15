@@ -3,6 +3,7 @@ import pandas as pd
 
 nodes = pd.read_csv(r'H:\ArcGIS\london.osmNODES.csv')
 links = pd.read_csv(r'H:\ArcGIS\london.osmLINKS.csv')
+output = r"H:/ArcGIS/londonDRIVE.shp"
 
 # A list of features and coordinate pairs
 results = []
@@ -42,7 +43,7 @@ for feature in feature_info:
 
 
 # Persist a copy of the Polyline objects using CopyFeatures
-arcpy.CopyFeatures_management(features, "H:/ArcGIS/londonDRIVE.shp")
+arcpy.CopyFeatures_management(features, output)
 
 #input_fc = "H:/ArcGIS/polylines.shp"
 
