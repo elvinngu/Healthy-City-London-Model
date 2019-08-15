@@ -25,14 +25,6 @@ for re in response_locations['locations']:
     except:
         result.append('no type')
     try:
-        result.append(response_details['brandId'])
-    except:
-        result.append('no brandId')
-    try:
-        result.append(response_details['odsCode'])
-    except:
-        result.append('no odsCode')
-    try:
         result.append(response_details['postalCode'])
     except:
         result.append('no postalCode')
