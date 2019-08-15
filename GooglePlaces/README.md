@@ -19,9 +19,11 @@ The purpose of this script is to overcome that limit as efficiently as possible.
 
 3. If the number of results in any particular circle exceeds 60, the function will automatically repeat parsing the area with circles of smaller radius to ensure that no result is missed. 
 
-4. [Optional - recommended when parsing an area of larger than 1km<sup>2</sup>] The user can also input the innerwidth argument which will split the large square area to smaller sqaure areas. This will make the programme run more efficiently. 
+4. Once all the results have been parsed. The code will remove any exact duplciates and return a csv file under a folder named 'results' with all the requested places data in it. 
 
-For example, if the user runs a search for a sqaure of area 100km<sup>2</sup>, the programme will end up using very small circles for the whole area. This is due to the high probability of a very dense area in some part of the 100km<sup>2</sup> area. If the user splits up the 100km<sup>2</sup> area into smaller squares to be searched, different radius of circles will be used which will allow a more efficient search of the 100km<sup>2</sup> area even when the desnity of places in the area is heterogenous. 
+5. [Optional - recommended when parsing an area of larger than 1km<sup>2</sup>] The user can also input the innerwidth argument which will split the large square area to smaller sqaure areas. This will make the programme run more efficiently. 
+
+For example, if the user runs a search for a sqaure of area 100km<sup>2</sup>, the programme will end up using very small circles for the whole area. This is due to the presence of a very dense area in some only part of the 100km<sup>2</sup> area. If the user splits up the 100km<sup>2</sup> area into smaller squares to be searched, different radius of circles will be used to search different which will allow a more efficient search of the 100km<sup>2</sup> area even when the desnity of places in the area is heterogenous. 
 
 
 
