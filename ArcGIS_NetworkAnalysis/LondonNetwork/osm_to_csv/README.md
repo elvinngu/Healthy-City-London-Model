@@ -2,6 +2,8 @@
 
 osm_to_csv is a function that converts a osm file from [OpenStreetMap](https://www.openstreetmap.org/export#map=13/51.5548/0.0647) to a csv file that contains information of the roads in the osm file. 
 
+IMPORTANT: the following osm code only takes into account DRIVING highways and DO NOT include pedestrians-only or bicycles-only roads. If the user wish to establish a network that include pedestrians-only pathways, the user can study the OSM XML file and remove the exceptions in the code. 
+
 ### How it works?
 
 1. The user will input the osm filename into the function and run it. 
