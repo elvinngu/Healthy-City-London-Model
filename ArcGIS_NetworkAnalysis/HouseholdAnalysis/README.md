@@ -14,6 +14,9 @@ A service area analysis layer is useful in determining the area of accessibility
 ### Editing the code
 The code creates the polygon with a 15 minutes walk boundary. This can be varied according to your needs as below. For detailed documentation on how to utilise the 'MakeServiceAreaLayer' function, visit http://desktop.arcgis.com/en/arcmap/10.3/tools/network-analyst-toolbox/make-service-area-layer.htm
 
+*Lines that need to be edited:
+4, 5, 7, 34, 35, 49, 76, 92, 110, 126, 142 and 181
+
 Example:
 ```python
 import arcpy
